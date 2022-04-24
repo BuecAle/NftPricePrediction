@@ -1,8 +1,6 @@
 # NFT Data collection of wax.atomichub.io
 
 import pandas as pd
-import numpy as np
-import regex as re
 import API_Atomic
 
 # Get Data from Atomic API
