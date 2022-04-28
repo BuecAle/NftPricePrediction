@@ -127,6 +127,8 @@ def get_data_expression(df, regex, column_name):
             data_string = str(re.findall("(?<='data': )(.*)", row[1]["assets"]))
             if bool(re.search(regex, data_string)):
                 attribute = re.findall(regex, data_string)[0]
+                if column_name == 'media':
+                    attribute = 'https://ipfs.atomichub.io/ipfs/' + attribute
                 attributes.append(attribute)
             else:
                 attributes.append(np.NaN)
@@ -134,6 +136,4 @@ def get_data_expression(df, regex, column_name):
             attributes.append(np.NaN)
 
     df[column_name] = attributes
-    if column_name == "media":
-        'https://ipfs.atomichub.io/ipfs/' + df['media'].astype(str)
     return df
