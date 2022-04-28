@@ -1,7 +1,7 @@
 # NFT Data collection of wax.atomichub.io
 
 import pandas as pd
-import API_Atomic
+import Functions_Atomic
 
 # Get Data from Atomic API
 # API_Atomic.Atomic_Data_Collection(2022-03-01, 2022-03-30)
@@ -16,11 +16,11 @@ df = df[df["market_contract"].str.contains("atomicmarket")]
 df = df[["price", "assets", "seller"]]
 
 # WAX <-> USD value form "https://coinranking.com/de/coin/mWg3P2dAashSL+wax-wax"
-API_Atomic.get_price(df, "amount': '(.+?)'", "price_usd")
-API_Atomic.get_expression(df, "asset_id': '(.+?)'", "asset_id")
-API_Atomic.get_expression(df, "collection_name': '(.+?)'", "collection_name")
-API_Atomic.get_data_expression(df, "name': '(.+?)'", "name")
-API_Atomic.get_data_expression(df, "img': '(.+?)'", "media")
+Functions_Atomic.get_price(df, "amount': '(.+?)'", "price_usd")
+Functions_Atomic.get_expression(df, "asset_id': '(.+?)'", "asset_id")
+Functions_Atomic.get_expression(df, "collection_name': '(.+?)'", "collection_name")
+Functions_Atomic.get_data_expression(df, "name': '(.+?)'", "name")
+Functions_Atomic.get_data_expression(df, "img': '(.+?)'", "media")
 
 df = df[["asset_id", "collection_name", "name", "price_usd", "seller", "media"]]
 df = df.dropna()
