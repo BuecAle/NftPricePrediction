@@ -7,9 +7,10 @@ import time
 import os
 import sys
 
+
 # Retrieved form XXX
-def Atomic_Data_Collection(start_date, end_date):
-    def API_request_Atomic(limit, time_data, time_start, lines_to_save_data, data_folder):
+def atomic_data_collection(start_date, end_date):
+    def api_request_atomic(limit, time_data, time_start, lines_to_save_data, data_folder):
         counter = 0
         df = pd.DataFrame({}, dtype=str)
         url = "https://wax.api.atomicassets.io/atomicmarket/v1/sales/"
@@ -32,7 +33,8 @@ def Atomic_Data_Collection(start_date, end_date):
             # print(response.status_code)
             if response.status_code == 200:
                 df_supp = pd.DataFrame(response.json()['data'], dtype=str)
-                if len(df_supp) == 0: break
+                if len(df_supp) == 0:
+                    break
                 df = df.append(df_supp, ignore_index=True)
 
                 time_data_supp = int(df_supp.created_at_time.min())
@@ -90,17 +92,20 @@ def Atomic_Data_Collection(start_date, end_date):
             os.mkdir(data_folder)
             # os.system('mkdir '+data_folder)
             print(data_folder)
-        API_request_Atomic(limit, dt_time[-1 - i], dt_time[-2 - i], lines_to_save_data, data_folder)
+        api_request_atomic(limit, dt_time[-1 - i], dt_time[-2 - i], lines_to_save_data, data_folder)
 
 
 # Get prices in USD
-def get_price(df, regex, column_name):
+def get_price(df, regex, column_name, crypto_prices):
     attributes = []
     for row in df.iterrows():
         if (re.findall("token_symbol': '(.+?)'", row[1]["price"])[0] == "WAX"):
-            attribute = float(re.findall(regex, row[1]["price"])[0]) * 0.00000001
-            attribute = round(attribute, 2)
-            attributes.append(attribute)
+            for i in range(len(crypto_prices['date'])):
+                if crypto_prices['date'][i] == row[1]["date"]:
+                    exchange_rate = crypto_prices['Open'][i]
+                    attribute = float(re.findall(regex, row[1]["price"])[0]) * 0.00000001 * exchange_rate
+                    attribute = round(attribute, 2)
+                    attributes.append(attribute)
         else:
             attributes.append("NaN")
     df[column_name] = attributes
@@ -144,7 +149,7 @@ def get_data_expression(df, regex, column_name):
 def get_wax_exchangerate(start_date, end_date, currency='WAXP-USD'):
     wax = yf.download(currency, start_date, end_date)
     wax = pd.DataFrame(wax['Open'])
-    wax['Date'] = wax.index
+    wax['date'] = wax.index
     return wax
 
 

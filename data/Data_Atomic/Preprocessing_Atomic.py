@@ -22,7 +22,7 @@ wax = Functions_Atomic.get_wax_exchangerate(start_date, end_date)
 
 # Get all necessary attributes
 Functions_Atomic.get_date(df, "date")
-Functions_Atomic.get_price(df, "amount': '(.+?)'", "price_usd")
+Functions_Atomic.get_price(df, "amount': '(.+?)'", "price_usd", wax)
 Functions_Atomic.get_expression(df, "asset_id': '(.+?)'", "asset_id")
 Functions_Atomic.get_expression(df, "'author': '(.+?)'", "collection_author")
 Functions_Atomic.get_expression(df, "collection_name': '(.+?)'", "collection_name")
