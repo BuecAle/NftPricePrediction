@@ -21,6 +21,7 @@ df = df[["price", "assets", "seller", "updated_at_time"]]
 wax = Functions_Atomic.get_wax_exchangerate(start_date, end_date)
 
 # Get all necessary attributes
+Functions_Atomic.get_date(df, "date")
 Functions_Atomic.get_price(df, "amount': '(.+?)'", "price_usd")
 Functions_Atomic.get_expression(df, "asset_id': '(.+?)'", "asset_id")
 Functions_Atomic.get_expression(df, "'author': '(.+?)'", "collection_author")
@@ -28,7 +29,7 @@ Functions_Atomic.get_expression(df, "collection_name': '(.+?)'", "collection_nam
 Functions_Atomic.get_data_expression(df, "name': '(.+?)'", "name")
 Functions_Atomic.get_data_expression(df, "img': '(.+?)'", "media")
 
-df = df[["asset_id", "collection_author", "collection_name", "name", "price_usd", "seller", "media"]]
+df = df[["asset_id", "collection_author", "collection_name", "name", "date", "price_usd", "seller", "media"]]
 df = df.dropna()
 df = df.drop_duplicates(subset=["asset_id"])
 df = df.drop_duplicates(subset=["name"])
