@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 import regex as re
 import numpy as np
+import yfinance as yf
 import time
 import os
 import sys
@@ -97,7 +98,7 @@ def get_price(df, regex, column_name):
     attributes = []
     for row in df.iterrows():
         if (re.findall("token_symbol': '(.+?)'", row[1]["price"])[0] == "WAX"):
-            attribute = float(re.findall(regex, row[1]["price"])[0]) * 0.00000001 * 0.3257
+            attribute = float(re.findall(regex, row[1]["price"])[0]) * 0.00000001
             attribute = round(attribute, 2)
             attributes.append(attribute)
         else:
@@ -137,3 +138,19 @@ def get_data_expression(df, regex, column_name):
 
     df[column_name] = attributes
     return df
+
+
+# Download WAX<->USD price rate from yahoo finance
+def get_wax_exchangerate(start_date, end_date, currency='WAXP-USD'):
+    wax = yf.download(currency, start_date, end_date)
+    wax = pd.DataFrame(wax['Open'])
+    wax['Date'] = wax.index
+    return wax
+
+
+# Get selling date in correct format
+def get_date(df, column_name):
+    df[column_name] = pd.to_datetime(df["updated_at_time"], utc=True, unit="ms")
+    df[column_name] = df[column_name].dt.date
+    return df
+
