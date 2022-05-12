@@ -106,8 +106,12 @@ def get_price(df, regex, column_name, crypto_prices):
                     attribute = float(re.findall(regex, row[1]["price"])[0]) * 0.00000001 * exchange_rate
                     attribute = round(attribute, 2)
                     attributes.append(attribute)
+                    price_found = True
+            if not(price_found):
+                attributes.append(np.NaN)
         else:
-            attributes.append("NaN")
+            attributes.append(np.NaN)
+        price_found = False
     df[column_name] = attributes
     return df
 
@@ -120,7 +124,7 @@ def get_expression(df, regex, column_name):
             attribute = re.findall(regex, row[1]["assets"])[0]
             attributes.append(attribute)
         else:
-            attributes.append("NaN")
+            attributes.append(np.NaN)
     df[column_name] = attributes
     return df
 
