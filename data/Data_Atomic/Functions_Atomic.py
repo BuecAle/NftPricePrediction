@@ -99,7 +99,8 @@ def atomic_data_collection(start_date, end_date):
 def get_price(df, regex, column_name, crypto_prices):
     attributes = []
     for row in df.iterrows():
-        if (re.findall("token_symbol': '(.+?)'", row[1]["price"])[0] == "WAX"):
+        if re.findall("token_symbol': '(.+?)'", row[1]["price"])[0] == "WAX":
+            price_found = False
             for i in range(len(crypto_prices['date'])):
                 if crypto_prices['date'][i] == row[1]["date"]:
                     exchange_rate = crypto_prices['Open'][i]
@@ -107,11 +108,10 @@ def get_price(df, regex, column_name, crypto_prices):
                     attribute = round(attribute, 2)
                     attributes.append(attribute)
                     price_found = True
-            if not(price_found):
+            if not price_found:
                 attributes.append(np.NaN)
         else:
             attributes.append(np.NaN)
-        price_found = False
     df[column_name] = attributes
     return df
 
@@ -122,6 +122,19 @@ def get_expression(df, regex, column_name):
     for row in df.iterrows():
         if bool(re.search(regex, row[1]["assets"])):
             attribute = re.findall(regex, row[1]["assets"])[0]
+            attributes.append(attribute)
+        else:
+            attributes.append(np.NaN)
+    df[column_name] = attributes
+    return df
+
+
+# Get collection attributes
+def get_collection_expression(df, regex, column_name):
+    attributes = []
+    for row in df.iterrows():
+        if bool(re.search(regex, row[1]["collection"])):
+            attribute = re.findall(regex, row[1]["collection"])[0]
             attributes.append(attribute)
         else:
             attributes.append(np.NaN)
@@ -162,4 +175,3 @@ def get_date(df, column_name):
     df[column_name] = pd.to_datetime(df["updated_at_time"], utc=True, unit="ms")
     df[column_name] = df[column_name].dt.date
     return df
-
