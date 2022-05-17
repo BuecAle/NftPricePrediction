@@ -21,11 +21,13 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import explained_variance_score
 from sklearn.metrics import confusion_matrix
 
+import parameter
 import warnings
 warnings.filterwarnings('ignore')
 
 # import dataset from csv-File
-dataset = pd.read_csv("../data/Data_Atomic/csv/dataAtomic_3_2022.csv")
+# file path is stored in parameter.py
+dataset = pd.read_csv(parameter.file)
 
 df = dataset[["asset_id", "price_usd", "name", "owner", "seller", "buyer", "burnable", "date", "media", "coll_name",
         "coll_author", "coll_market_fee"]]

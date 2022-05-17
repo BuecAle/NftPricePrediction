@@ -1,14 +1,15 @@
 # NFT Data collection of wax.atomichub.io
 import datetime as dt
 import pandas as pd
-import Functions_Atomic
+import Functions_Atomic, parameter
 
 # Get Data from Atomic API
 # API_Atomic.Atomic_Data_Collection(2022-03-01, 2022-03-30)
 
-date = '3_2022'
-start_date = dt.datetime(2022,1,1)
-end_date = dt.datetime(2022,5,1)
+# dates have to be changed in parameter.py file
+date = parameter.date
+start_date = parameter.start_date
+end_date = parameter.end_date
 directory = 'C:/Users/BuecAle/Desktop/Uni/Masterthesis/NFT_Database/Data_Atomic/'
 filepath = directory + date + '/' + 'NFT_Atomic_' + date + '.csv'
 

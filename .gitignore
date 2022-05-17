@@ -1,6 +1,7 @@
 .idea
 
 config.py
+parameter.py
 data/Data_Atomic/csv
 
 ### Python template
