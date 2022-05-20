@@ -2,7 +2,6 @@
 
 config.py
 parameter.py
-data/Data_Atomic/csv
 
 ### Python template
 # Byte-compiled / optimized / DLL files
