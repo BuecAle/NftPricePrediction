@@ -8,6 +8,7 @@ import os
 import sys
 
 
+
 # Retrieved form XXX
 def atomic_data_collection(start_date, end_date):
     def api_request_atomic(limit, time_data, time_start, lines_to_save_data, data_folder):
@@ -57,12 +58,12 @@ def atomic_data_collection(start_date, end_date):
                     print(len(df_supp), len(df), pd.to_datetime(time_data, unit='ms'),
                           pd.to_datetime(time_data_supp, unit='ms'), page)
                     supp = pd.to_datetime(time_start, unit='ms')
-                    df.to_csv(data_folder + 'NFT_Atomic_' + str(supp.month) + '_' + str(supp.year) + '.csv.gz', index=False)
+                    df.to_csv(data_folder + 'NFT_Atomic_' + str(supp.month) + '_' + str(supp.year) + '.csv', index=False)
             time.sleep(1)
 
         supp = pd.to_datetime(time_start, unit='ms')
         if len(df) > 0:
-            df.to_csv(data_folder + 'NFT_Atomic_' + str(supp.month) + '_' + str(supp.year) + '.csv.gz', index=False)
+            df.to_csv(data_folder + 'NFT_Atomic_' + str(supp.month) + '_' + str(supp.year) + '.csv', index=False)
         else:
             print('No data in this month')
 
@@ -82,16 +83,16 @@ def atomic_data_collection(start_date, end_date):
     lines_to_save_data = 5000
     limit = 100
     for i in range(len(dt_time) - 1):
-        data_folder = './Data_Atomic/'
-        if not os.path.exists(data_folder):
-            os.mkdir(data_folder)
-            print(data_folder)
-            # os.system('mkdir '+data_folder)
-        data_folder += str(dt_time[-2 - i].month) + '_' + str(dt_time[-2 - i].year) + '/'
-        if not os.path.exists(data_folder):
-            os.mkdir(data_folder)
-            # os.system('mkdir '+data_folder)
-            print(data_folder)
+        data_folder = './csv/raw_data/'
+        # if not os.path.exists(data_folder):
+        #     os.mkdir(data_folder)
+        #     print(data_folder)
+        #     # os.system('mkdir '+data_folder)
+        # data_folder += str(dt_time[-2 - i].month) + '_' + str(dt_time[-2 - i].year) + '/'
+        # if not os.path.exists(data_folder):
+        #     os.mkdir(data_folder)
+        #     # os.system('mkdir '+data_folder)
+        #     print(data_folder)
         api_request_atomic(limit, dt_time[-1 - i], dt_time[-2 - i], lines_to_save_data, data_folder)
 
 
@@ -151,7 +152,8 @@ def get_data_expression(df, regex, column_name):
             if bool(re.search(regex, data_string)):
                 attribute = re.findall(regex, data_string)[0]
                 if column_name == 'media':
-                    attribute = 'https://ipfs.atomichub.io/ipfs/' + attribute
+                    if not attribute.startswith("https://"):
+                        attribute = 'https://ipfs.atomichub.io/ipfs/' + attribute
                 attributes.append(attribute)
             else:
                 attributes.append(np.NaN)

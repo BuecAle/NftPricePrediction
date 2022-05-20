@@ -1,5 +1,6 @@
 .idea
 
+data/Data_Atomic/csv/raw_data
 config.py
 parameter.py
 

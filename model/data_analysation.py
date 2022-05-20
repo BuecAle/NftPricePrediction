@@ -27,7 +27,7 @@ warnings.filterwarnings('ignore')
 
 # import dataset from csv-File
 # file path is stored in parameter.py
-dataset = pd.read_csv(parameter.file)
+dataset = pd.read_csv(parameter.data_analysation.file)
 
 df = dataset[["asset_id", "price_usd", "name", "owner", "seller", "buyer", "burnable", "date", "media", "coll_name",
         "coll_author", "coll_market_fee"]]
