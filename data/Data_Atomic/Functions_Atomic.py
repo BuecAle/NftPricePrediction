@@ -151,7 +151,8 @@ def get_data_expression(df, regex, column_name):
             if bool(re.search(regex, data_string)):
                 attribute = re.findall(regex, data_string)[0]
                 if column_name == 'media':
-                    attribute = 'https://ipfs.atomichub.io/ipfs/' + attribute
+                    if not attribute.startswith("https://"):
+                        attribute = 'https://ipfs.atomichub.io/ipfs/' + attribute
                 attributes.append(attribute)
             else:
                 attributes.append(np.NaN)
