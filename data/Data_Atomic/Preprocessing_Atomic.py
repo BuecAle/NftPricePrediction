@@ -23,14 +23,23 @@ wax = Functions_Atomic.get_wax_exchangerate(start_date, end_date)
 
 # Get all necessary attributes
 Functions_Atomic.get_date(df, "date")
+print("Date column done")
 Functions_Atomic.get_price(df, "amount': '(.+?)'", "price_usd", wax)
+print("Price column done")
 Functions_Atomic.get_expression(df, "asset_id': '(.+?)'", "asset_id")
+print("Asset_id column done")
 Functions_Atomic.get_expression(df, "'owner': '(.+?)'", "owner")
+print("Owner column done")
 Functions_Atomic.get_expression(df, "is_burnable': (.+?),", "burnable")
+print("Burnable column done")
 Functions_Atomic.get_data_expression(df, "name': '(.+?)'", "name")
+print("Name column done")
 Functions_Atomic.get_data_expression(df, "img': '(.+?)'", "media")
+print("Media column done")
 Functions_Atomic.get_collection_expression(df, "'author': '(.+?)'", "coll_author")
+print("Collection author column done")
 Functions_Atomic.get_collection_expression(df, "market_fee': (.+?),", "coll_market_fee")
+print("Market fee column done")
 
 
 df = df[["asset_id", "name", "owner", "seller", "buyer", "burnable", "date", "price_usd", "media", "collection_name",
