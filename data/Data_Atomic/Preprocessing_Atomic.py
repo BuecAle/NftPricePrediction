@@ -11,7 +11,7 @@ date = parameter.Preprocessing_Atomic.date
 start_date = parameter.Preprocessing_Atomic.start_date
 end_date = parameter.Preprocessing_Atomic.end_date
 directory = './csv/raw_data/'
-filepath = directory + '/' + 'NFT_Atomic_' + date + '.csv'
+filepath = directory + '/NFT_Atomic_' + date + '.csv'
 
 # Filter only atomicmarket nfts
 df = pd.read_csv(filepath)
@@ -41,5 +41,5 @@ df = df.drop_duplicates(subset=["asset_id"])
 df = df.drop_duplicates(subset=["name"])
 
 file_to_save_data = "dataAtomic_" + date
-df.to_csv("csv/" + file_to_save_data + ".csv")
+df.to_csv("csv/prepared_data" + file_to_save_data + ".csv")
 
