@@ -50,5 +50,5 @@ df = df.drop_duplicates(subset=["asset_id"])
 df = df.drop_duplicates(subset=["name"])
 
 file_to_save_data = "dataAtomic_" + date
-df.to_csv("csv/prepared_data" + file_to_save_data + ".csv")
+df.to_csv("csv/prepared_data/" + file_to_save_data + ".csv")
 
