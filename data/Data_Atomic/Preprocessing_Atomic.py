@@ -11,7 +11,7 @@ date = parameter.Preprocessing_Atomic.date
 start_date = parameter.Preprocessing_Atomic.start_date
 end_date = parameter.Preprocessing_Atomic.end_date
 directory = './csv/raw_data/'
-filepath = directory + date + '/' + 'NFT_Atomic_' + date + '.csv'
+filepath = directory + '/' + 'NFT_Atomic_' + date + '.csv'
 
 # Filter only atomicmarket nfts
 df = pd.read_csv(filepath)
