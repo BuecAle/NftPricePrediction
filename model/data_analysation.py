@@ -27,7 +27,7 @@ warnings.filterwarnings('ignore')
 
 # import dataset from csv-File
 # file path is stored in parameter.py
-dataset = pd.read_csv(parameter.file)
+dataset = pd.read_csv(parameter.data_analysation.file)
 
 df = dataset[["asset_id", "price_usd", "name", "owner", "seller", "buyer", "burnable", "date", "media", "coll_name",
         "coll_author", "coll_market_fee"]]
@@ -56,12 +56,12 @@ df = df.drop(['asset_id','media'],axis=1)
 print(df.head())
 print(df.corr())
 
-plt.figure(figsize=(10,6))
-sns.plotting_context('notebook',font_scale=1.2)
-g = sns.pairplot(df[["name", "owner", "seller", "buyer", "date", "price_usd", "coll_name",
-         "coll_author", "coll_market_fee"]], hue='price_usd',size=4)
-g.set(xticklabels=[])
-plt.show()
+# plt.figure(figsize=(10,6))
+# sns.plotting_context('notebook',font_scale=1.2)
+# g = sns.pairplot(df[["name", "owner", "seller", "buyer", "date", "price_usd", "coll_name",
+#          "coll_author", "coll_market_fee"]], hue='price_usd',size=4)
+# g.set(xticklabels=[])
+# plt.show()
 
 sns.jointplot(x='name',y='price_usd',data=df,kind='reg',size=4)
 sns.jointplot(x='owner',y='price_usd',data=df,kind='reg',size=4)

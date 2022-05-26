@@ -7,10 +7,10 @@ import Functions_Atomic, parameter
 # API_Atomic.Atomic_Data_Collection(2022-03-01, 2022-03-30)
 
 # dates have to be changed in parameter.py file
-date = parameter.date
-start_date = parameter.start_date
-end_date = parameter.end_date
-directory = 'C:/Users/BuecAle/Desktop/Uni/Masterthesis/NFT_Database/Data_Atomic/'
+date = parameter.Preprocessing_Atomic.date
+start_date = parameter.Preprocessing_Atomic.start_date
+end_date = parameter.Preprocessing_Atomic.end_date
+directory = './csv/raw_data/'
 filepath = directory + date + '/' + 'NFT_Atomic_' + date + '.csv'
 
 # Filter only atomicmarket nfts
