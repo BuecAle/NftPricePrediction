@@ -177,3 +177,21 @@ def get_date(df, column_name):
     df[column_name] = pd.to_datetime(df["updated_at_time"], utc=True, unit="ms")
     df[column_name] = df[column_name].dt.date
     return df
+
+
+# Get Images
+def get_images(df):
+    counter = 0
+    for row in df.iloc.iterrows():
+        print(counter)
+        counter += 1
+        image_url = row[1]["media"]
+        asset_id = str(row[1]["asset_id"])
+        price = str(row[1]["price_usd"])
+        try:
+            image_data = requests.get(image_url).content
+            image_path = "images/_" + price + "_" + asset_id + "_.jpg"
+            with open(image_path, "wb") as image:
+                image.write(image_data)
+        except requests.exceptions.ConnectionError as e:
+            r = "No response"
