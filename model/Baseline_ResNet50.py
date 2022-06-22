@@ -9,9 +9,9 @@ from PIL import ImageFile
 
 
 # Functions
-def show_predition(fname):
+def show_prediction(fname):
     fname = DATADIR + '/' + fname
-    pred = round(predictor.predict_filename(fname)[0])
+    pred = round(predictor.predict_filename(fname)[0], 2)
     actual = p.search(fname).group(1)
     vis.show_image(fname)
     print("Predicted Price: %s | Actual Price: %s:" % (pred, actual))
@@ -94,24 +94,27 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 # First layers are trained with weight adjustment
 learner.fit_onecycle(1e-4, 2)
 # 15 layers frozen
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 learner.freeze(15)
 # Last layers are trained with weight adjustment
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 learner.fit_onecycle(1e-4, 2)
 
 # Specify predictor
 predictor = ktrain.get_predictor(learner.model, preproc)
+ktrain.get_predictor(learner.model, preproc).save("predictor_bs128")
 
 validation_data = list(test_data.filenames)
 
+mae_value = mae(validation_data)
+rmse_value = rmse(validation_data)
+mape_value = mape(validation_data)
 
-print(mae(validation_data))
-print(rmse(validation_data))
-print(mape(validation_data))
-
-
-
+print(str(mae_value), str(rmse_value), str(mape_value))
 
 
+for element in validation_data[:50]:
+    show_prediction(element)
 
 
 
