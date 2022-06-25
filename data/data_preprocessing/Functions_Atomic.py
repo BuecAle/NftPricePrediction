@@ -4,12 +4,14 @@ import regex as re
 import numpy as np
 import yfinance as yf
 import time
-import os
 import sys
 
 
 
 # Retrieved form XXX
+#Nadini, M., Alessandretti, L., di Giacinto, F., Martino, M., Aiello, L. M., & Baronchelli, A. (2021).
+# Mapping the NFT revolution: market trends, trade networks, and visual features. Scientific Reports, 11(1).
+# https://doi.org/10.1038/s41598-021-00053-8
 def atomic_data_collection(start_date, end_date):
     def api_request_atomic(limit, time_data, time_start, lines_to_save_data, data_folder):
         counter = 0
