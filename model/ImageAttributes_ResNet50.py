@@ -1,21 +1,13 @@
-import matplotlib
-import os
 import re
 import ktrain
 import parameter
-import math
 import pandas as pd
-import matplotlib.pyplot as plt
 from ktrain import vision as vis
 from PIL import ImageFile
 import tensorflow as tf
-from keras.models import Model, load_model
-from keras import Input
-from tensorflow.keras.models import Sequential
+from keras.models import Model, Sequential
 from keras.layers import Dense
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.activations import relu
-from tensorflow.keras import backend as K
+from keras.optimizers import Adam
 
 
 # Function to filter asset_id from filename
@@ -67,17 +59,17 @@ learner = ktrain.get_learner(model = model,
                            batch_size = 128)
 
 # Compile learner
-learner.model.compile(optimizer=Adam(learning_rate=1e-10),
+learner.model.compile(optimizer=Adam(learning_rate=1e-4),
                       loss=tf.keras.losses.MeanAbsoluteError(),
                       metrics=[tf.keras.metrics.MeanAbsoluteError()])
 
 # Train model
 ImageFile.LOAD_TRUNCATED_IMAGES = True
-learner.fit_onecycle(1e-10, 2)
+learner.fit_onecycle(1e-4, 2)
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 learner.freeze(15)
-learner.fit_onecycle(1e-10, 2)
+learner.fit_onecycle(1e-4, 2)
 
 # Get predictor
 predictor = ktrain.get_predictor(learner.model, preproc)
