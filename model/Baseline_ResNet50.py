@@ -1,11 +1,10 @@
-import matplotlib
-import os
 import ktrain
 import math
 import parameter
 import re
 from ktrain import vision as vis
 from PIL import ImageFile
+
 
 
 # Functions
@@ -89,6 +88,8 @@ learner = ktrain.get_learner(model = model,
                             val_data = test_data,
                            batch_size = 64)
 
+learner.model.optimizer.test
+
 # Training of model
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 # First layers are trained with weight adjustment
@@ -104,15 +105,17 @@ learner.fit_onecycle(1e-4, 2)
 predictor = ktrain.get_predictor(learner.model, preproc)
 ktrain.get_predictor(learner.model, preproc).save("predictor_bs128")
 
+# Store test data in list
 validation_data = list(test_data.filenames)
 
+# Calculate error metrics
 mae_value = mae(validation_data)
 rmse_value = rmse(validation_data)
 mape_value = mape(validation_data)
 
 print(str(mae_value), str(rmse_value), str(mape_value))
 
-
+# Print predicted prices of 50 test datapoints
 for element in validation_data[:50]:
     show_prediction(element)
 
