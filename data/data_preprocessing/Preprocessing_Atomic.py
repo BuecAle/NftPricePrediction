@@ -1,22 +1,22 @@
 # NFT Data collection of wax.atomichub.io
-import datetime as dt
 import pandas as pd
 import Functions_Atomic, parameter
 
-# Get Data from Atomic API
-# API_Atomic.Atomic_Data_Collection(2022-03-01, 2022-03-30)
 
 # dates have to be changed in parameter.py file
 date = parameter.Preprocessing_Atomic.date
 start_date = parameter.Preprocessing_Atomic.start_date
 end_date = parameter.Preprocessing_Atomic.end_date
 directory = './csv/raw_data/'
-filepath = directory + '/NFT_Atomic_' + date + '.csv'
+# directory = 'C:/Users/BuecAle/Desktop/Uni/Masterthesis/NFT_Database/Data_Atomic/'
+# filepath = directory + date + '/NFT_Atomic_' + date + '.csv'
+filepath = directory + 'NFT_Atomic_' + date + '.csv'
 
 # Filter only atomicmarket nfts
 df = pd.read_csv(filepath)
 df = df[df["market_contract"].str.contains("atomicmarket")]
 df = df[["price", "assets", "seller", "buyer", "collection", "collection_name", "updated_at_time"]]
+print("File found")
 
 # WAX <-> USD value form yahoo finance
 wax = Functions_Atomic.get_wax_exchangerate(start_date, end_date)
@@ -41,7 +41,7 @@ print("Collection author column done")
 Functions_Atomic.get_collection_expression(df, "market_fee': (.+?),", "coll_market_fee")
 print("Market fee column done")
 
-
+# Clean dataframe
 df = df[["asset_id", "name", "owner", "seller", "buyer", "burnable", "date", "price_usd", "media", "collection_name",
          "coll_author", "coll_market_fee"]]
 df.rename(columns={'collection_name':'coll_name'}, inplace=True)
@@ -49,6 +49,7 @@ df = df.dropna()
 df = df.drop_duplicates(subset=["asset_id"])
 df = df.drop_duplicates(subset=["name"])
 
+# Save file
 file_to_save_data = "dataAtomic_" + date
 df.to_csv("csv/prepared_data/" + file_to_save_data + ".csv")
 
